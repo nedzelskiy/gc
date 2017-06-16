@@ -1,14 +1,21 @@
 'use strict';
 
+import './styles.scss';
 import * as React from 'react';
 import { Ii18n, IServices } from '../../Root/src'
 
 interface IProps {
-    srcQrCode: string;
-    generateNewQrHandler: React.EventHandler<React.SyntheticEvent<HTMLElement>>;
+    readonly srcQrCode: string;
+    readonly generateNewQrHandler: React.EventHandler<React.SyntheticEvent<HTMLElement>>;
+    readonly backToGamesListHandler: React.EventHandler<React.SyntheticEvent<HTMLElement>>;
 }
 
 export class QrCode extends React.PureComponent<Ii18n & IServices & IProps, null> {
+    static propTypes = {
+        srcQrCode: React.PropTypes.string.isRequired,
+        generateNewQrHandler: React.PropTypes.func.isRequired
+    };
+
     render() {
         let S = this.props.services
             ,t = this.props.translatior
@@ -19,9 +26,15 @@ export class QrCode extends React.PureComponent<Ii18n & IServices & IProps, null
                 <img ref = "qrImage" name = "qrImage" src = {this.props.srcQrCode} alt = "" />
                 <button type="button"
                         className="btn btn-outline-primary generate-new-qr"
-                        onClick = {this.props.generateNewQrHandler.bind(this)}
+                        onClick = { this.props.generateNewQrHandler.bind(this) }
                         href="#"
-                        role="button">{t('generate new qr-code')}
+                        role="button">{ t('generate new qr-code') }
+                </button>
+                <button type="button"
+                        className="btn btn-outline-primary back-to-game-list"
+                        onClick = {this.props.backToGamesListHandler.bind(this) }
+                        href="#"
+                        role="button">{ t('back to game list') }
                 </button>
             </div>
         )

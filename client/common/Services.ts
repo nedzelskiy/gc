@@ -42,6 +42,50 @@ class Services {
             head.appendChild(script);
         });
     };
+
+    public static fadeOut(el: HTMLElement, callback: any = null, time = 100): void {
+        el.style.opacity = '1';
+
+        let _time_: number = time/10 || 50;
+        (function fade() {
+            let val: number = parseFloat(el.style.opacity);
+            if (val <= 0) {
+                el.style.display = "none";
+                if (callback && (typeof callback === 'function')){
+                    callback();
+                }
+            } else {
+                setTimeout(function(){
+                    val = val - 0.1;
+                    el.style.opacity = '' + val;
+                    fade();
+                }, _time_);
+            }
+        })();
+    };
+
+    public static fadeIn(el: HTMLElement, display = 'block', callback: any = null, time = 100) : void {
+        el.style.opacity = '0';
+        el.style.display = display;
+
+        let _time_: number = time/10 || 50;
+
+        (function fade() {
+            let val: number = parseFloat(el.style.opacity);
+            if (val < 1) {
+                setTimeout(function(){
+                    val = val + 0.1;
+                    el.style.opacity = '' + val;
+                    fade();
+                },_time_);
+            } else {
+                el.style.opacity = '1';
+                if (callback && (typeof callback === 'function')){
+                    callback();
+                }
+            }
+        })();
+    };
 }
 
 export default Services;

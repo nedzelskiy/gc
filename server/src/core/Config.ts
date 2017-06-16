@@ -27,12 +27,12 @@ export interface IConfigEnv {
     db: {
         connection: string;
     };
-};
+}
 
 export interface IConfigAll {
     dev: IConfigEnv;
     prod: IConfigEnv;
-};
+}
 
 export default class Config {
     private static settings = <IConfigAll>{

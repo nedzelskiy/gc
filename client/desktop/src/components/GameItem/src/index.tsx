@@ -24,7 +24,7 @@ export class GameItem extends React.PureComponent<IProps, null> {
             <a
                 href="#"
                 className = { `${this.constructor.name} list-group-item` }
-                onClick = { this.props.gameClickHandler.bind(null, gameId) }
+                onClick = { this.props.gameClickHandler.bind(this, gameId) }
                 data-game = { gameId }
             >
                 <h2>{ S.uFC(gameObj.name.toLowerCase()) }</h2>

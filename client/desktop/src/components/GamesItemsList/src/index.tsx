@@ -2,30 +2,32 @@
 
 import './styles.scss';
 import * as React from 'react';
+import { elementsVisible } from './reducer';
 import { GameItem } from '../../GameItem/src';
 import { Ii18n, IServices } from '../../Root/src'
 import { InputFilterGamesItems, IProps as IFG } from '../../InputFilterGamesItems/src'
 import { IGameDescribe } from '../../../../../../server/src/services/GamesList';
 
 interface IProps {
-    gamesList:  Array<IGameDescribe>;
+    readonly gamesList: Array<IGameDescribe>;
+    readonly visGameItemsList: elementsVisible;
+    readonly callbackHideGameItemsList: () => void
 }
-
-const gameClickHandler = (gameId: string): void => {
-  console.log(gameId);
-};
 
 export class GamesItemsList extends React.PureComponent<IProps & Ii18n & IServices & IFG, null> {
     static propTypes = {
-
+        gamesList: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
     };
 
     render() {
         let S = this.props.services
             ,t = this.props.translatior
             ;
+        if (this.props.visGameItemsList !== elementsVisible.Visible) {
+            S.fadeOut(this.refs[this.constructor.name] as HTMLElement, this.props.callbackHideGameItemsList);
+        }
         return (
-            <div className = { this.constructor.name }>
+            <div className = { this.constructor.name } ref = { this.constructor.name } >
                 <div className="col-md-12">
                     <p className="lead">{S.uFC(t('list of games'))}</p>
                 </div>
@@ -38,7 +40,7 @@ export class GamesItemsList extends React.PureComponent<IProps & Ii18n & IServic
                                     if (this.props.gamesList.length > 0 ) {
                                         return this.props.gamesList.map((game: IGameDescribe, i: number) => {
                                             return (
-                                                <GameItem key = {i} gameObj = { game } gameClickHandler ={ gameClickHandler }/>
+                                                <GameItem key = {i} gameObj = { game } {...this.props}/>
                                             )
                                         });
                                     } else {
@@ -55,38 +57,3 @@ export class GamesItemsList extends React.PureComponent<IProps & Ii18n & IServic
         )
     }
 }
-
-// import GameList from './GameList_';
-// import {connect} from 'react-redux';
-// import {Ii18n} from '../reducers/langPanel';
-// import S from '../../../common/S';
-// import InputFilterGames from './InputFilterGames';
-// import {IGameDescribe} from '../../../../server/src/S/GamesList';
-//
-// const gameClickHandler = (e: React.SyntheticEvent<HTMLElement>): void  => {
-//     let node: HTMLElement = e.currentTarget
-//         ,gameName: string = node.getAttribute('data-game') || ''
-//         ;
-//     if (gameName.length < 1) return;
-//     console.log('gameClickHandler', gameName);
-// };
-//
-// interface IAppState {
-//     gamesList:  Array<IGameDescribe>;
-// }
-//
-// export const GamesList: React.StatelessComponent<IAppState & Ii18n> = (props): JSX.Element => (
-
-// );
-//
-// GamesList.propTypes = {
-//     gamesList: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
-// };
-//
-//
-// const mapStateToProps = (state: IAppState & Ii18n) => ({
-//     gamesList: state.gamesList,
-//     i18n: state.i18n
-// });
-//
-// export default connect<IAppState & Ii18n, {}, {}>(mapStateToProps, undefined)(GamesList);
