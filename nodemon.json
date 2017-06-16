@@ -1,0 +1,11 @@
+{
+  "watch": [
+    "./scripts",
+    "./webpack",
+    "nodemon.json",
+    "package.json",
+    "tsconfig.json",
+    "wallaby.conf.js",
+    "client/init.ts"
+  ]
+}
