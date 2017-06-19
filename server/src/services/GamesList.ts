@@ -3,7 +3,7 @@
 import * as path from 'path';
 
 const pathToCurrentFile: string = __dirname;
-const pathToGames = path.resolve(pathToCurrentFile + '../../games/');
+const pathToGames = path.resolve('./games/');
 
 export interface IGameDescribe {
     name: string;
@@ -30,19 +30,22 @@ export default class GamesList {
     private list: IGameDescribe[] = [];
     private settingsList: IGameSettings = {};
 
-    constructor(fs: IFs, getterGameSettings: (pathToSettings: string) => any) {
+    constructor(fs: IFs) {
         let arrGamesList: string[] = [];
         try {
             arrGamesList = fs.readdirSync(pathToGames);
-        } catch (err) {}
+        } catch (err) {
+            console.log(err);
+        }
         arrGamesList.forEach((gameName:string) => {
             this.list.push({
                 name: gameName,
                 description: fs.readFileSync(`${pathToGames}/${gameName}/description.txt`, 'UTF-8')
             });
+            let settings = JSON.parse(fs.readFileSync(`${pathToGames}/${gameName}/settings.txt`, 'UTF-8'));
             this.settingsList[gameName] = {
                 name: gameName,
-                settings: getterGameSettings(`${pathToGames}/${gameName}/settings`)
+                settings: settings
             };
         });
     };

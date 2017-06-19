@@ -3,21 +3,18 @@
 import GamesList, {IFs, IGameDescribe, IGameSettings} from '../../../src/services/GamesList';
 import {expect, assert} from 'chai';
 
+const jsonFileMock = '{"maxPlayers":5}';
+
 export const fsMock: IFs = {
     readdirSync: (filename: string, options?: { flag?: string; }): string[] => {
         return ['hexagon'];
     },
     readFileSync: (filename: string, encoding: string): string => {
-        return 'file contents';
+        return jsonFileMock;
     }
 };
 
-export const getterGameSettingsMock = () => {
-    return {
-        maxPlayers: 5
-    };
-}
-const gamesList: GamesList = new GamesList(fsMock, getterGameSettingsMock);
+const gamesList: GamesList = new GamesList(fsMock);
 
 describe('GamesList', () => {
     it('should return array list of games', next => {
@@ -26,7 +23,7 @@ describe('GamesList', () => {
         assert.isDefined(gList[0].name);
         assert.isDefined(gList[0].description);
         expect(gList[0].name).to.be.equal('hexagon');
-        expect(gList[0].description).to.be.equal('file contents');
+        expect(gList[0].description).to.be.equal(jsonFileMock);
         next();
     });
     it('should return object of games settings', next => {
