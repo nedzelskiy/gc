@@ -24,7 +24,7 @@ class Services {
         script.async = true;
         script.src = url;
 
-        return new (window as any).Promise((resolve : () => void, reject: () => void) => {
+        return new (window as Window & { Promise:any }).Promise((resolve : () => void, reject: () => void) => {
             if (script.readyState){ // IE
                 script.onreadystatechange = function() {
                     if (script.readyState == "loaded" ||
@@ -64,7 +64,7 @@ class Services {
         })();
     };
 
-    public static fadeIn(el: HTMLElement, display = 'block', callback: any = null, time = 100) : void {
+    public static fadeIn(el: HTMLElement, callback: any = null, time = 100, display = 'block') : void {
         el.style.opacity = '0';
         el.style.display = display;
 

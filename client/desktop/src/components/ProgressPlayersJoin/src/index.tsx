@@ -4,7 +4,7 @@ import './styles.scss';
 import * as React from 'react';
 import { Ii18n, IServices } from '../../Root/src'
 
-interface IProps {
+export interface IProps {
     readonly maxPlayers: number;
     readonly totalPlayers: number;
 }

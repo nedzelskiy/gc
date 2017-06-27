@@ -3,14 +3,16 @@
 import './styles.scss';
 import * as React from 'react';
 import {connect} from 'react-redux';
-import { QrCode } from '../../QrCode/src'
-import { ProgressPlayersJoin } from '../../ProgressPlayersJoin/src'
 import { WelcomeTop } from '../../WelcomeTop/src/';
+import { GameJoinArea } from '../../GameJoinArea/src'
 import Services from '../../../../../common/Services';
 import { GamesItemsList } from '../../GamesItemsList/src';
 import { LangPanel, ILangObj } from '../../LangPanel/src'
-import { hideGamesList } from '../../GamesItemsList/src/action';
+import { hideGamesList, showGamesList } from '../../GamesItemsList/src/action';
+import { showGameJoinArea, hideGameJoinArea } from '../../GameJoinArea/src/action';
 import { filterGameAction, IDispatch } from '../../InputFilterGamesItems/src/action'
+
+export enum elementsVisible {Visible, NotVisible}
 
 export interface IServices {
     readonly services: typeof Services
@@ -43,10 +45,15 @@ const mapDispatchToProps = (dispatch: IDispatch) => ({
         hideGamesList.call({dispatch: dispatch});
     },
     callbackHideGameItemsList: () => {
-        console.log('sda');
+        showGameJoinArea.call({dispatch: dispatch});
     },
     generateNewQrHandler: (e: any) => {},
-    backToGamesListHandler: (e: any) => {}
+    backToGamesListHandler: (e: React.SyntheticEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        hideGameJoinArea.call({dispatch: dispatch});
+        showGamesList.call({dispatch: dispatch});
+    }
 });
 
 // TODO gamesList not correct name
@@ -56,7 +63,8 @@ const mapStateToProps = (state: any) => ({
     langHandler: langHandler,
     gamesList: state.InputFilterGamesItems,
     visGameItemsList: state.GamesItemsList,
-    srcQrCode: 'sdsd',
+    visGameJoinArea: state.GameJoinArea,
+    srcQrCode: 'null',
     maxPlayers: 0,
     totalPlayers: 0
 });
@@ -68,8 +76,7 @@ const Root: React.StatelessComponent<any> = (props): JSX.Element => (
             <LangPanel { ...props } />
             <div className="container content">
                 <GamesItemsList { ...props } />
-                <QrCode {...props} />
-                <ProgressPlayersJoin {...props} />
+                <GameJoinArea {...props } />
             </div>
         </div>
     </div>

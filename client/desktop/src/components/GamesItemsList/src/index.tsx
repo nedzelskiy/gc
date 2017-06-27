@@ -2,11 +2,11 @@
 
 import './styles.scss';
 import * as React from 'react';
-import { elementsVisible } from './reducer';
 import { GameItem } from '../../GameItem/src';
-import { Ii18n, IServices } from '../../Root/src'
-import { InputFilterGamesItems, IProps as IFG } from '../../InputFilterGamesItems/src'
+import { elementsVisible } from '../../Root/src';
+import { Ii18n, IServices } from '../../Root/src';
 import { IGameDescribe } from '../../../../../../server/src/services/GamesList';
+import { InputFilterGamesItems, IProps as IFG } from '../../InputFilterGamesItems/src';
 
 interface IProps {
     readonly gamesList: Array<IGameDescribe>;
@@ -23,9 +23,15 @@ export class GamesItemsList extends React.PureComponent<IProps & Ii18n & IServic
         let S = this.props.services
             ,t = this.props.translatior
             ;
-        if (this.props.visGameItemsList !== elementsVisible.Visible) {
-            S.fadeOut(this.refs[this.constructor.name] as HTMLElement, this.props.callbackHideGameItemsList);
+        if (typeof this.refs[this.constructor.name] !== 'undefined') {
+            let el = this.refs[this.constructor.name] as HTMLElement;
+            if (this.props.visGameItemsList !== elementsVisible.Visible && el.style.display !== 'none') {
+                S.fadeOut(this.refs[this.constructor.name] as HTMLElement, this.props.callbackHideGameItemsList);
+            } else if (this.props.visGameItemsList === elementsVisible.Visible && el.style.display === 'none') {
+                S.fadeIn(this.refs[this.constructor.name] as HTMLElement);
+            }
         }
+
         return (
             <div className = { this.constructor.name } ref = { this.constructor.name } >
                 <div className="col-md-12">

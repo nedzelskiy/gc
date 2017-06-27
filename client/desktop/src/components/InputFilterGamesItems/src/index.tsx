@@ -43,33 +43,3 @@ export class InputFilterGamesItems extends React.PureComponent<IProps & Ii18n & 
         )
     }
 }
-//
-// import {connect} from 'react-redux';
-// import {Ii18n} from '../reducers/langPanel';
-// import Services from '../../../common/Services';
-// import {IGamesListAction} from '../reducers/gamesList';
-//
-// export const InputFilterGames: React.StatelessComponent<any> = (props): JSX.Element => (
-
-// );
-//
-// interface IDispatch {
-//     (param: IGamesListAction): void;
-// }
-//
-//
-// const mapDispatchToProps = (dispatch: IDispatch) => ({
-//     onFilter: (input: string): void => {
-//         dispatch({ type: 'FILTER_GAME', input: input});
-//     }
-// });
-//
-// const mapStateToProps = (state: Ii18n) => ({
-//     i18n: state.i18n
-// });
-//
-// InputFilterGames.propTypes = {
-//     onFilter: React.PropTypes.func.isRequired
-// };
-//
-// export default connect<Ii18n, IDispatch, {}>(mapStateToProps, mapDispatchToProps)(InputFilterGames);

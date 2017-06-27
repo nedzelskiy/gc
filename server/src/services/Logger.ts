@@ -13,4 +13,10 @@ export default class Logger {
         console.log(conditions);
         console.log(chalk.gray('<><><><><><><><><><><><><><>'));
     }
+
+
+    public static devLog(mess: string): boolean {
+
+        return true;
+    }
 }
