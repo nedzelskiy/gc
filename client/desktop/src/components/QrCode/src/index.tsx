@@ -6,6 +6,7 @@ import { Ii18n, IServices } from '../../Root/src'
 
 export interface IProps {
     readonly srcQrCode: string;
+    readonly gameId: string;
     readonly generateNewQrHandler: React.EventHandler<React.SyntheticEvent<HTMLElement>>;
     readonly backToGamesListHandler: React.EventHandler<React.SyntheticEvent<HTMLElement>>;
 }
@@ -13,6 +14,7 @@ export interface IProps {
 export class QrCode extends React.PureComponent<Ii18n & IServices & IProps, null> {
     static propTypes = {
         srcQrCode: React.PropTypes.string.isRequired,
+        gameId: React.PropTypes.string.isRequired,
         generateNewQrHandler: React.PropTypes.func.isRequired
     };
 
@@ -26,7 +28,7 @@ export class QrCode extends React.PureComponent<Ii18n & IServices & IProps, null
                 <img ref = "qrImage" name = "qrImage" src = {this.props.srcQrCode} alt = "" />
                 <button type="button"
                         className="btn btn-outline-primary generate-new-qr"
-                        onClick = { this.props.generateNewQrHandler.bind(this) }
+                        onClick = { this.props.generateNewQrHandler.bind(this, this.props.gameId) }
                         href="#"
                         role="button">{ t('generate new qr-code') }
                 </button>

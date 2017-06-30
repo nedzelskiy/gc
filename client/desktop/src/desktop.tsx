@@ -1,6 +1,5 @@
 'use strict';
 
-import * as Faye from 'faye';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -25,24 +24,6 @@ req.keys().forEach((v) => {
 
 const store = createStore(combineReducers(reducers), rExt.composeWithDevTools(applyMiddleware(thunk)));
 // const history = syncHistoryWithStore(browserHistory, store);
-
-interface IClientSettings {
-    readonly server_url: string;
-    readonly timeout: string;
-    readonly registrationUrl: string;
-    readonly animationTime: number;
-    readonly socketClient: {};
-}
-
-const clientSettings: IClientSettings = {
-    server_url: 'SERVER_RENDER:protocol:://SERVER_RENDER:domain::SERVER_RENDER:port:',
-    timeout: 'SERVER_RENDER:timeout:',
-    registrationUrl: 'SERVER_RENDER:registrationUrl:',
-    animationTime: 600,
-    socketClient: new Faye.Client('SERVER_RENDER:bayeuxCreateClientUrl:', {
-        timeout: 'SERVER_RENDER:timeout:'
-    })
-};
 
 ReactDOM.render(
     <Provider store = {store}>

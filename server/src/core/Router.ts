@@ -69,7 +69,7 @@ export default class Router {
 
                     res.json({
                         'success': true,
-                        'params': {
+                        'data': {
                             'gameName': gameName,
                             'QRData': srcQRCode,
                             'key': id_connection,

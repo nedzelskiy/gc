@@ -2,13 +2,7 @@
 
 import {IGameDescribe} from '../../../../../../server/src/services/GamesList';
 
-// const initialState: Array<IGameDescribe> = JSON.parse(`SERVER_RENDER:gamesList:`);
-const initialState: Array<IGameDescribe>  =  [
-    {
-        name: 'test',
-        description:'sss'
-    }
-];
+const initialState: Array<IGameDescribe> = JSON.parse(`SERVER_RENDER:gamesList:`);
 
 export interface IAction {
     readonly type: 'FILTER_GAME';

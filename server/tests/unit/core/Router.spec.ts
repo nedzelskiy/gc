@@ -134,12 +134,12 @@ describe('Router tests', () => {
         res.on('end', () => {
             let json = JSON.parse(res._getData());
             assert.isDefined(json.success);
-            assert.isDefined(json.params);
-            assert.isDefined(json.params.maxPlayers);
-            assert.isDefined(json.params.gameName);
-            assert.isDefined(json.params.QRData);
-            expect(json.params.maxPlayers).to.be.equal(5);
-            expect(json.params.QRData).to.be.equal(qrData);
+            assert.isDefined(json.data);
+            assert.isDefined(json.data.maxPlayers);
+            assert.isDefined(json.data.gameName);
+            assert.isDefined(json.data.QRData);
+            expect(json.data.maxPlayers).to.be.equal(5);
+            expect(json.data.QRData).to.be.equal(qrData);
             expect(json.success).to.be.true;
             next();
         });

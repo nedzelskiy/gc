@@ -16,7 +16,7 @@ export class WelcomeTop extends React.PureComponent<IServices & Ii18n, null> {
                      <h1 className="mb-4">{S.uFC(t('hello, on game center online')) + '!'}</h1>
                      <p className="mb-0">
                          {S.uFC(t('play multiplayers games online with your mobile phones')) + '!'}
-                         {S.uFC(t('see'))} <a className="underline-dashed">{S.uFC(t('about'))}</a> {t('for more information') + '!'}!
+                         {' ' + S.uFC(t('see'))} <a className="underline-dashed">{S.uFC(t('about'))}</a> {t('for more information') + '!'}!
                      </p>
                      <p>
                          {S.uFC(t('for start')) + ', ' + t('please') + ', ' + t('choose the game from list below') + '!'}
