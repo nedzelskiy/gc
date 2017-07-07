@@ -1,0 +1,1 @@
+gameName=hexagon ../../../node_modules/webpack/bin/webpack.js --config ../../webpack.game.conf.js & ../../../node_modules/lite-server/bin/lite-server -c ../../game-bs-config.js

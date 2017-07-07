@@ -66,7 +66,7 @@ const getNewGameCredentionals = (url: string, gameId: string): Promise<never> =>
         defaultProps.srcQrCode = res.data.QRData;
         defaultProps.maxPlayers = res.data.maxPlayers;
         defaultProps.gameId = res.data.gameName;
-        defaultProps.totalPlayers = 1;
+        defaultProps.totalPlayers = 0;
         return new Promise((resolve, reject) => {
             resolve();
         });

@@ -1,6 +1,5 @@
 'use strict';
 
-import * as fs from 'fs';
 import {IConfigEnv} from './Config';
 import {IPool} from '../services/PoolsFabric';
 import Services from '../services/Services';
@@ -96,11 +95,7 @@ export const qrCodeCallback = <IQrCodeCallback>{
         err && qrCodeCallback.reject(err);
         !err && qrCodeCallback.resolve(srcQRCode);
     }
-}
-
-
-
-
+};
 
 const sendFailureMessage = (mess: string, action: string, res: Response): void => {
     res.json({
@@ -108,4 +103,4 @@ const sendFailureMessage = (mess: string, action: string, res: Response): void =
         message: mess,
         action: action
     });
-}
+};

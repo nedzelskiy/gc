@@ -11,7 +11,8 @@
     "dev:server": "nodemon ./scripts/run.js --target=server --development --sourcemap=source-map --watching --unittest --run",
     "dev:client": "nodemon ./scripts/run.js --target=client --development --sourcemap=source-map --watching --unittest",
     "prod:client": "node ./scripts/run.js --target=client --production --sourcemap=source-map --unittest",
-    "prod:server": "node ./scripts/run.js --target=server --production --sourcemap=source-map --unittest --run"
+    "prod:server": "node ./scripts/run.js --target=server --production --sourcemap=source-map --unittest --run",
+    "browse": "node ./node_modules/lite-server/bin/lite-server --server build/"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.0",
@@ -45,6 +46,7 @@
     "jasmine": "^2.5.3",
     "jest": "^20.0.1",
     "jsonfile": "^2.4.0",
+    "lite-server": "^2.3.0",
     "minimist": "^1.2.0",
     "node-cmd": "^2.0.0",
     "node-mocks-http": "^1.6.1",

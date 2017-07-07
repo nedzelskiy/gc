@@ -38,6 +38,8 @@ export default class GamesList {
             console.log(err);
         }
         arrGamesList.forEach((gameName:string) => {
+            // denny files - comma exsist in name
+            if (gameName.lastIndexOf('.') > -1) return;
             this.list.push({
                 name: gameName,
                 description: fs.readFileSync(`${pathToGames}/${gameName}/description.txt`, 'UTF-8')
