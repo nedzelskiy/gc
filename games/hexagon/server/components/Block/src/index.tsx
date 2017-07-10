@@ -21,8 +21,8 @@ export class Block extends React.PureComponent<IProps,{}> {
         blockHeight: React.PropTypes.number.isRequired,
         destiny: React.PropTypes.string.isRequired,
         id: React.PropTypes.oneOfType([React.PropTypes.string,React.PropTypes.number]).isRequired,
-        top: React.PropTypes.number.isRequired,
-        left: React.PropTypes.number.isRequired
+        top: React.PropTypes.number,
+        left: React.PropTypes.number
     };
 
     render() {
@@ -34,19 +34,19 @@ export class Block extends React.PureComponent<IProps,{}> {
             blockHeight
         } = this.props;
 
-        let styles = {
+        let styles: React.CSSProperties = {
             width: `${ blockWidth }px`,
-            height: `${ blockHeight }px`,
-            top: `${ top }px`,
-            left: `${ left }px`
+            height: `${ blockHeight }px`
         };
+        ('undefined' !== typeof top) && (styles['top'] = `${ top }px`);
+        ('undefined' !== typeof left) && (styles['left'] = `${ left }px`);
 
         return (
             <div
                 data-id = { this.props.id }
-                className = { `${this.constructor.name } block-${ destiny }` }
+                className = { `${(this.constructor as Function & {name: string}).name } block-${ destiny }` }
                 style = { styles }
             ></div>
         )
     }
-};
+}

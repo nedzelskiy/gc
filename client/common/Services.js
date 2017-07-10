@@ -1,61 +1,62 @@
 'use strict';
-
-class Services {
+Object.defineProperty(exports, "__esModule", { value: true });
+var Services = (function () {
+    function Services() {
+    }
     // upper first char
-    public static uFC(string: string): string {
+    Services.uFC = function (string) {
         if (!string || '' === string) {
             return string;
         }
         return string.charAt(0).toUpperCase() + string.slice(1);
     };
-
+    ;
     // upper first char every words in string
-    public static uFCEW(string: string): string {
+    Services.uFCEW = function (string) {
         return string;
     };
-
-
-    public static addScriptFile(url: string): Promise<never> {
-        let head = document.getElementsByTagName('head')[0]
-            ,script: any = document.createElement('script')
-            ;
+    ;
+    Services.addScriptFile = function (url) {
+        var head = document.getElementsByTagName('head')[0], script = document.createElement('script');
         script.type = 'text/javascript';
         script.charset = 'utf-8';
         script.async = true;
         script.src = url;
-
-        return new (window as Window & { Promise:any }).Promise((resolve : () => void, reject: () => void) => {
-            if (script.readyState){ // IE
-                script.onreadystatechange = function() {
+        return new window.Promise(function (resolve, reject) {
+            if (script.readyState) {
+                script.onreadystatechange = function () {
                     if (script.readyState == "loaded" ||
-                        script.readyState == "complete"){
+                        script.readyState == "complete") {
                         script.onreadystatechange = null;
                         resolve();
                     }
                     reject();
                 };
-            } else {  //Others
-                script.onload = function(){
+            }
+            else {
+                script.onload = function () {
                     resolve();
                 };
             }
             head.appendChild(script);
         });
     };
-
-    public static fadeOut(el: HTMLElement, callback: any = null, time = 100): void {
+    ;
+    Services.fadeOut = function (el, callback, time) {
+        if (callback === void 0) { callback = null; }
+        if (time === void 0) { time = 100; }
         el.style.opacity = '1';
-
-        let _time_: number = time/10 || 50;
+        var _time_ = time / 10 || 50;
         (function fade() {
-            let val: number = parseFloat(el.style.opacity);
+            var val = parseFloat(el.style.opacity);
             if (val <= 0) {
                 el.style.display = "none";
-                if (callback && (typeof callback === 'function')){
+                if (callback && (typeof callback === 'function')) {
                     callback();
                 }
-            } else {
-                setTimeout(function(){
+            }
+            else {
+                setTimeout(function () {
                     val = val - 0.1;
                     el.style.opacity = '' + val;
                     fade();
@@ -63,31 +64,33 @@ class Services {
             }
         })();
     };
-
-    public static fadeIn(el: HTMLElement, callback: any = null, time = 100, display = 'block') : void {
+    ;
+    Services.fadeIn = function (el, callback, time, display) {
+        if (callback === void 0) { callback = null; }
+        if (time === void 0) { time = 100; }
+        if (display === void 0) { display = 'block'; }
         el.style.opacity = '0';
         el.style.display = display;
-
-        let _time_: number = time/10 || 50;
-
+        var _time_ = time / 10 || 50;
         (function fade() {
-            let val: number = parseFloat(el.style.opacity);
+            var val = parseFloat(el.style.opacity);
             if (val < 1) {
-                setTimeout(function(){
+                setTimeout(function () {
                     val = val + 0.1;
                     el.style.opacity = '' + val;
                     fade();
-                },_time_);
-            } else {
+                }, _time_);
+            }
+            else {
                 el.style.opacity = '1';
-                if (callback && (typeof callback === 'function')){
+                if (callback && (typeof callback === 'function')) {
                     callback();
                 }
             }
         })();
     };
-
-    public static mapKeys(keyCode: number) {
+    ;
+    Services.mapKeys = function (keyCode) {
         switch (keyCode) {
             case 37:
                 return 'leftArrow';
@@ -101,6 +104,7 @@ class Services {
                 return String.fromCharCode(keyCode);
         }
     };
-}
-
-export default Services;
+    ;
+    return Services;
+}());
+exports.default = Services;
