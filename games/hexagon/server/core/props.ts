@@ -43,9 +43,9 @@ export const initAppLogicActions = (gameSettings: IGameSettings, state: IAppStat
     if (gameSettings.isDebug) {
         document.getElementsByTagName('body')[0].onkeydown = (e: KeyboardEvent): void => {
             let actionName: string = Services.mapKeys(e.keyCode);
-            ('undefined' !== typeof moveAction[actionName])
-                && ('function' === typeof moveAction[actionName])
-                    && (moveAction as any)[actionName]();
+            ('undefined' !== typeof (<any>moveAction)[actionName])
+                && ('function' === typeof (<any>moveAction)[actionName])
+                    && (<any>moveAction)[actionName]();
         };
     }
 };
