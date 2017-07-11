@@ -22,6 +22,22 @@ const clientPromise = new Promise((resolve, reject) => {
 
 });
 
+
+const gamesPromise = new Promise((resolve, reject) => {
+    recursive("games/",[
+        '*.ts',
+        '*.tsx',
+        'game-bs-config.js',
+        'webpack.game.conf.js',
+        'games/**/build/*',
+        ignoreFunc
+    ], function (err, files) {
+        err && reject(err);
+        !err && resolve(files);
+    });
+
+});
+
 const serverPromise = new Promise((resolve, reject) => {
     recursive("server/",[
         '*.ts',
@@ -34,7 +50,8 @@ const serverPromise = new Promise((resolve, reject) => {
 
 Promise.all([
     clientPromise,
-    serverPromise
+    serverPromise,
+    gamesPromise
 ]).then(results => {
     let filesArr = results.reduce(function(result, current) {
         return result.concat(current);

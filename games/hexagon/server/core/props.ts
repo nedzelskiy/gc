@@ -43,7 +43,9 @@ export const initAppLogicActions = (gameSettings: IGameSettings, state: IAppStat
     if (gameSettings.isDebug) {
         document.getElementsByTagName('body')[0].onkeydown = (e: KeyboardEvent): void => {
             let actionName: string = Services.mapKeys(e.keyCode);
-            (moveAction as any)[actionName]();
+            ('undefined' !== typeof moveAction[actionName])
+                && ('function' === typeof moveAction[actionName])
+                    && (moveAction as any)[actionName]();
         };
     }
 };
@@ -52,7 +54,7 @@ export const makeAppProps = (gameSettings: IGameSettings, state: IAppState, serv
     appComponents.forEach((componentName: string) => {
         appProps[`${componentName.toLowerCase()}Props`] = state[componentName];
     });
-    Object.assign(appProps, gameSettings, {services: services});
+    (<any>Object).assign(appProps, gameSettings, {services: services});
 
     return appProps;
 };
