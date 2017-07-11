@@ -1,73 +1,29 @@
 'use strict';
 
-import * as Faye from 'faye';
-import { initState } from './state';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Board } from './components/Board/src';
+import { Root } from './components/Root/src';
+import { getGameSettings } from './core/settings';
+import { initState, IAppState } from './core/states';
 import Services from '../../../client/common/Services';
-import { moveCursorRight } from './components/Cursor/src/action';
+import { makeAppProps, initAppLogicActions } from './core/props';
 
-export interface IGameSettings{
-    readonly socketClient: {};
-    isDebug: boolean;
-    blockWidth: number;
-    blockHeight: number;
-    verticalIndent: number;
-    horizontalIndent: number;
-    totalVerticalBlocks: number;
-    totalHorizontalBlocks: number;
-}
-
-let state: {[propName: string]: any} = initState({
-    set: function (target: any, property: string, value: {}) {
-        target[property] = value;
-        renderApp();
-        return true;
-    }
-});
-
-const gameSettings: IGameSettings = {
-    isDebug: true,
-    socketClient:
-        new Faye.Client(
-            'SERVER_RENDER:protocol:://SERVER_RENDER:domain::SERVER_RENDER:port:SERVER_RENDER:bayeuxCreateClientUrl:',
-            {timeout: 'SERVER_RENDER:timeout:'}
-        ),
-    blockWidth: 35,
-    blockHeight: 35,
-    verticalIndent: 2,
-    horizontalIndent: 2,
-    totalVerticalBlocks: 5,
-    totalHorizontalBlocks: 5
-};
-
-interface IMoveAction{
-    leftArrow() : void;
-}
-
-const renderApp = () => {
+const renderApp = (props: {}) => {
     ReactDOM.render(
-        <Board
-            { ...gameSettings }
-            cursorTop = { state.Cursor.top }
-            cursorLeft = { state.Cursor.left }
-        >Loading...</Board>,
+        <Root { ...props } >Loading...</Root>,
         document.querySelector('#game-root')
     );
 };
 
-renderApp();
+getGameSettings().then(gameSettings => {
+    let state: IAppState = initState({
+        set: function (target: any, property: string, value: {}) {
+            target[property] = value;
+            renderApp(makeAppProps(gameSettings, state, Services));
+            return true;
+        }
+    });
 
-const moveAction: any = {
-    rightArrow: (): void => {
-        state.Cursor = moveCursorRight(state.Cursor, gameSettings.blockWidth);
-    }
-};
-
-if (gameSettings.isDebug) {
-    document.getElementsByTagName('body')[0].onkeydown = (e: KeyboardEvent): void => {
-        let actionName: string = Services.mapKeys(e.keyCode);
-        moveAction[actionName]();
-    };
-}
+    initAppLogicActions(gameSettings, state, Services);
+    renderApp(makeAppProps(gameSettings, state, Services));
+});

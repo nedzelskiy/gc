@@ -8,8 +8,6 @@ export interface IProps {
     readonly blockHeight: number;
     readonly id: number | string;
     readonly destiny?: string;
-    readonly top?: number;
-    readonly left?: number;
 }
 
 export class Block extends React.PureComponent<IProps,{}> {
@@ -21,15 +19,11 @@ export class Block extends React.PureComponent<IProps,{}> {
         blockHeight: React.PropTypes.number.isRequired,
         destiny: React.PropTypes.string.isRequired,
         id: React.PropTypes.oneOfType([React.PropTypes.string,React.PropTypes.number]).isRequired,
-        top: React.PropTypes.number,
-        left: React.PropTypes.number
     };
 
     render() {
         let {
             destiny,
-            top,
-            left,
             blockWidth,
             blockHeight
         } = this.props;
@@ -38,8 +32,6 @@ export class Block extends React.PureComponent<IProps,{}> {
             width: `${ blockWidth }px`,
             height: `${ blockHeight }px`
         };
-        ('undefined' !== typeof top) && (styles['top'] = `${ top }px`);
-        ('undefined' !== typeof left) && (styles['left'] = `${ left }px`);
 
         return (
             <div

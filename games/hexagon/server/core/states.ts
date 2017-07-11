@@ -5,17 +5,18 @@ if(!(window as any)['Proxy']) {
     require("es2015-proxy-shim");
 }
 
-
-interface IAppState {
+export interface IAppState {
     [componentName: string]: any
 }
+export let appState: IAppState = {};
+export let appComponents: Array<string> = [];
 
 // dynamic load all states from components
-let req = require.context('./components/', true, /state\.tsx?$/);
-let appState: IAppState = {};
+let req = require.context('../components/', true, /state\.tsx?$/);
 req.keys().forEach((v) => {
     let state: any = (req(v) as {'default': {}})['default'];
     let stateName : string = v.split('/')[1];
+    appComponents.push(stateName);
     appState[stateName] = state;
 });
 

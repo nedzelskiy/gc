@@ -4,18 +4,13 @@ import './styles.scss';
 import * as React from 'react';
 import { Block } from '../../Block/src';
 import { Cursor } from '../../Cursor/src'
-import { IGameSettings } from '../../../game';
+import { IGameSettings } from '../../../core/settings';
 
 type IProps = IGameSettings & {
-    cursorTop: number;
-    cursorLeft: number;
+    cursorProps: any;
 };
 
 export class Board extends React.PureComponent<IProps,{}> {
-    static propTypes = {
-        cursorTop: React.PropTypes.number.isRequired,
-        cursorLeft: React.PropTypes.number.isRequired
-    };
 
     render() {
         let totalBlocks: number = this.props.totalHorizontalBlocks * this.props.totalVerticalBlocks;
@@ -24,10 +19,9 @@ export class Board extends React.PureComponent<IProps,{}> {
         while (arrOfComponents.length < totalBlocks) {
             arrOfComponents.push(
                 <Block
+                    { ...this.props }
                     key = { arrOfComponents.length }
                     id = { arrOfComponents.length }
-                    blockWidth = { this.props.blockWidth }
-                    blockHeight = { this.props.blockHeight }
                 />
             );
         }
@@ -37,16 +31,14 @@ export class Board extends React.PureComponent<IProps,{}> {
             ,height: `${ this.props.totalVerticalBlocks * this.props.blockHeight + this.props.verticalIndent }px`,
             paddingTop: `${ this.props.verticalIndent }px`,
             paddingLeft: `${ this.props.horizontalIndent }px`,
+            top: `calc(50% - ${(this.props.totalVerticalBlocks * this.props.blockHeight + this.props.verticalIndent) / 2 }px)`
         };
 
         return (
             <div className={ (this.constructor as Function & {name: string}).name } style = { styles }>
                 <Cursor
-                    id = 'cursor'
-                    blockWidth = { this.props.blockWidth }
-                    blockHeight = { this.props.blockHeight }
-                    top = { this.props.cursorTop }
-                    left = {this.props.cursorLeft }
+                    { ...this.props }
+                    { ...this.props['cursorProps'] }
                 />
                 { arrOfComponents }
             </div>

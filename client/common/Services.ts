@@ -89,6 +89,8 @@ class Services {
 
     public static mapKeys(keyCode: number) {
         switch (keyCode) {
+            case 13:
+                return 'enterKey';
             case 37:
                 return 'leftArrow';
             case 38:

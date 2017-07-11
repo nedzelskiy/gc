@@ -1,11 +1,13 @@
 export interface IState{
-    top: number;
-    left: number;
+    cursorTop: number;
+    cursorLeft: number;
+    isSelected: boolean
 }
 
 let state: IState = {
-    top: 0,
-    left: 0
+    cursorTop: 0,
+    cursorLeft: 0,
+    isSelected: false
 };
 
 export default state;

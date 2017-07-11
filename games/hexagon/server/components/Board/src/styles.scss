@@ -1,9 +1,10 @@
 .Board{
-  display: inline-block;
+  display: block;
   height:auto;
   width:auto;
   margin: auto;
   overflow: hidden;
   position: relative;
   outline:1px dotted #aaa;
+  position: relative;
 }
