@@ -3,8 +3,10 @@
 import { IAppState } from './states';
 import { appComponents } from './states';
 import { IGameSettings } from './settings';
+import figureState, { IState as IFigureState } from '../components/Figure/src/state';
 import Services from '../../../../client/common/Services';
 import { moveCursorRight, moveCursorLeft, moveCursorDown, moveCursorUp, selectCursor } from '../components/Cursor/src/action';
+import { hideFigure, showFigure } from '../components/Figure/src/action';
 
 interface IMoveAction{
     leftArrow(): void;
@@ -18,6 +20,8 @@ export interface IAppProps{
     [propName: string]: {}
 }
 let appProps: IAppProps = {};
+
+let dispatchMapToProps: any = {};
 
 export const initAppLogicActions = (gameSettings: IGameSettings, state: IAppState, services: typeof Services):void  => {
     const maxRightCursorPosition: number = gameSettings.blockWidth * gameSettings.totalHorizontalBlocks - gameSettings.blockWidth;
@@ -40,6 +44,22 @@ export const initAppLogicActions = (gameSettings: IGameSettings, state: IAppStat
         }
     };
 
+    // // make arr of figures states
+    // let figureStates: {
+    //     [id: string]:IFigureState
+    // } = {};
+    // let totalBlocks: number = gameSettings.totalHorizontalBlocks * gameSettings.totalVerticalBlocks;
+    // for (let i = 0; i<totalBlocks; i++) {
+    //     figureStates[`${i}`] = figureState;
+    // }
+    // state.Figure = figureStates;
+
+    dispatchMapToProps.makeBlockVisible = (id: string) => {
+        console.log(state.Figure[id]);
+        state.Figure[id] = showFigure(state.Figure[id]);
+        console.log(state.Figure[id]);
+    };
+
     if (gameSettings.isDebug) {
         document.getElementsByTagName('body')[0].onkeydown = (e: KeyboardEvent): void => {
             let actionName: string = Services.mapKeys(e.keyCode);
@@ -54,7 +74,7 @@ export const makeAppProps = (gameSettings: IGameSettings, state: IAppState, serv
     appComponents.forEach((componentName: string) => {
         appProps[`${componentName.toLowerCase()}Props`] = state[componentName];
     });
-    (<any>Object).assign(appProps, gameSettings, {services: services});
+    (<any>Object).assign(appProps, gameSettings, {services: services}, dispatchMapToProps);
 
     return appProps;
 };

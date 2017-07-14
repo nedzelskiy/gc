@@ -1,4 +1,7 @@
 .Block{
+  text-align:center;
+  cursor:pointer;
+
   &.block-empty{
     outline:1px dashed #aaaaaa;
     float:left;
