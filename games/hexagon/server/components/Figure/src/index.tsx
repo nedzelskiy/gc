@@ -5,16 +5,17 @@ import { IState } from './state';
 import * as React from 'react';
 
 type IProps = {
-    [propID: string] : IState;
+    FigureMultiStates: Array<IState>
 } & {
-    id: string;
+    id: number;
 }
 
 export class Figure extends React.PureComponent<IProps,{}> {
     render() {
-        let id = this.props.id;
+        console.log(this.props.FigureMultiStates);
+        let id: number = this.props.id;
         let styles = {
-            'transform':  this.props[id].isVisible ? 'scale(1)' : 'scale(0)'
+            'transform':  this.props.FigureMultiStates[id].isVisible ? 'scale(1)' : 'scale(0)'
         };
 
         return (

@@ -12,7 +12,7 @@
     "dev:client": "nodemon ./scripts/run.js --target=client --development --sourcemap=source-map --watching --unittest",
     "prod:client": "node ./scripts/run.js --target=client --production --sourcemap=source-map --unittest",
     "prod:server": "node ./scripts/run.js --target=server --production --sourcemap=source-map --unittest --run",
-    "browse": "node ./node_modules/lite-server/bin/lite-server --server build/"
+    "browser-sync": "node ./node_modules/lite-server/bin/lite-server --server build/"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.0",

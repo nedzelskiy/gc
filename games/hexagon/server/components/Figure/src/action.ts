@@ -1,15 +1,22 @@
 'use strict';
 
-import { IState } from './state';
+import state, { IState } from './state';
 
-export const showFigure = (state: IState): IState => {
-    let newState = { ...state };
-    newState.isVisible = true;
-    return newState
+export const showFigure = (id: number, FigureState: Array<IState>): Array<IState> => {
+    let newFState = { ...FigureState };
+    newFState[id].isVisible = true;
+    return newFState;
 };
 
-export const hideFigure = (state: IState): IState => {
-    let newState = { ...state };
-    newState.isVisible = false;
-    return newState
+export const hideFigure = (id: number, FigureState: Array<IState>): Array<IState> => {
+    let newFState = { ...FigureState };
+    newFState[id].isVisible = false;
+    return newFState;
+};
+
+export const fillMultiState = (countElem: number, figureMultiStates: Array<IState>): void => {
+    let i = 0;
+    while(i < countElem) {
+        figureMultiStates[i] = state;
+    }
 };

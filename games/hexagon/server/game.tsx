@@ -9,7 +9,6 @@ import Services from '../../../client/common/Services';
 import { makeAppProps, initAppLogicActions } from './core/props';
 
 const renderApp = (props: {}) => {
-    console.log(props);
     ReactDOM.render(
         <Root { ...props } >Loading...</Root>,
         document.querySelector('#game-root')
@@ -20,12 +19,12 @@ getGameSettings().then(gameSettings => {
     let state: IAppState = initState({
         set: function (target: any, property: string, value: {}) {
             target[property] = value;
-            console.log('s');
+            console.log('rerender');
             renderApp(makeAppProps(gameSettings, state, Services));
             return true;
         }
     });
-
+    console.log(state);
     initAppLogicActions(gameSettings, state, Services);
     renderApp(makeAppProps(gameSettings, state, Services));
 });

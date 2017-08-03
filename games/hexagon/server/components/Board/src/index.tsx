@@ -15,7 +15,6 @@ export class Board extends React.PureComponent<IProps,{}> {
     render() {
         let totalBlocks: number = this.props.totalHorizontalBlocks * this.props.totalVerticalBlocks;
         let arrOfComponents: Array<JSX.Element> = [];
-
         while (arrOfComponents.length < totalBlocks) {
             arrOfComponents.push(
                 <Block

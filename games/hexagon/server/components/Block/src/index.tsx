@@ -8,7 +8,7 @@ import { IState } from '../../Figure/src/state';
 export interface IProps {
     readonly blockWidth: number;
     readonly blockHeight: number;
-    readonly id: number | string;
+    readonly id: number;
     readonly destiny?: string;
     readonly figureProps: IState;
 }
@@ -21,11 +21,11 @@ export class Block extends React.PureComponent<any,{}> {
         blockWidth: React.PropTypes.number.isRequired,
         blockHeight: React.PropTypes.number.isRequired,
         destiny: React.PropTypes.string.isRequired,
-        id: React.PropTypes.oneOfType([React.PropTypes.string,React.PropTypes.number]).isRequired,
+        id: React.PropTypes.number.isRequired,
     };
 
     blockClickHandler = (e: React.SyntheticEvent<HTMLElement>) => {
-        this.props.makeBlockVisible(this.props.id);
+        this.props.makeFigureVisible(this.props.id);
     };
 
     render() {
@@ -46,7 +46,11 @@ export class Block extends React.PureComponent<any,{}> {
                 className = { `${(this.constructor as Function & {name: string}).name } block-${ destiny }` }
                 onClick = { this.blockClickHandler }
                 style = { styles }
-            ><Figure id = { `${this.props.id}` } { ...this.props['figureProps'] } /></div>
+            ><Figure
+                { ...this.props }
+                { ...this.props['figureProps'] }
+                id = { this.props.id }
+            /></div>
         )
     }
 }

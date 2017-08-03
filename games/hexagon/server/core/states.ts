@@ -19,6 +19,12 @@ req.keys().forEach((v) => {
     appComponents.push(stateName);
     appState[stateName] = state;
 });
+req = require.context('../components/', true, /multiStates\.tsx?$/);
+req.keys().forEach((v) => {
+    let state: any = (req(v) as {'default': {}})['default'];
+    let multiStatesName : string = v.split('/')[1] + 'MultiStates';
+    appState[multiStatesName] = state;
+});
 
 export const initState = (handler: {}): {} => {
     return new Proxy(appState, handler);
